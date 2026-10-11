@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
 import { useFetch } from "../hooks/useFetch";
@@ -8,7 +9,10 @@ function MenuPage() {
 
   const debounced = useDebounce(query, 400);
 
-  const { data: dishes, isLoading, error } = useFetch("/menu.json");
+  const apiUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+  const menuUrl = apiUrl ? `${apiUrl}/api/menu` : "/menu.json";
+
+  const { data: dishes, isLoading, error } = useFetch(menuUrl);
 
   if (isLoading) {
     return <h2>Loading menu...</h2>;
